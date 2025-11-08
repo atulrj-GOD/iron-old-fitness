@@ -1,0 +1,246 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>IRON OLD FITNESS | Dashboard</title>
+  <style>
+    /* RESET */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: radial-gradient(circle at top, #000, #111 60%, #000);
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* HEADER */
+    h1 {
+      color: #ff6a00;
+      font-size: 3rem;
+      text-shadow: 0 0 20px rgba(255, 120, 0, 0.7);
+      margin-top: 40px;
+      letter-spacing: 2px;
+    }
+
+    h2 {
+      margin-top: 30px;
+      color: #ffae00;
+      text-shadow: 0 0 10px rgba(255, 170, 0, 0.6);
+    }
+
+    /* DASHBOARD CARD */
+    .dashboard-card {
+      background: rgba(25, 25, 25, 0.95);
+      border: 1px solid rgba(255, 100, 0, 0.4);
+      border-radius: 25px;
+      box-shadow: 0 0 25px rgba(255, 100, 0, 0.3);
+      padding: 40px;
+      width: 420px;
+      margin-top: 30px;
+      transition: all 0.4s ease;
+      text-align: center;
+    }
+
+    .dashboard-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0 40px rgba(255, 120, 0, 0.6);
+    }
+
+    /* PROFILE IMAGE */
+    .profile-pic {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #ff6a00;
+      box-shadow: 0 0 20px rgba(255, 100, 0, 0.6);
+      margin-bottom: 15px;
+    }
+
+    .default-pic {
+      background: linear-gradient(135deg, #ff6600, #ff3300);
+      display: inline-block;
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      line-height: 130px;
+      font-size: 3rem;
+      color: black;
+      font-weight: bold;
+      box-shadow: 0 0 20px rgba(255, 100, 0, 0.5);
+      margin-bottom: 15px;
+    }
+
+    .member-info p { font-size: 1.1rem; color: #ddd; margin: 8px 0; }
+    .member-info strong { color: #ff8c1a; }
+
+    /* STATUS */
+    .status {
+      text-align: center;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: bold;
+      margin-top: 15px;
+      letter-spacing: 1px;
+    }
+    .status.paid {
+      background: linear-gradient(90deg, #00ff80, #00cc66);
+      color: #000;
+      box-shadow: 0 0 25px rgba(0, 255, 150, 0.5);
+    }
+    .status.pending {
+      background: linear-gradient(90deg, #ff6600, #ff3300);
+      color: white;
+      box-shadow: 0 0 25px rgba(255, 100, 0, 0.6);
+    }
+
+    /* BUTTON */
+    button {
+      margin-top: 25px;
+      background: linear-gradient(90deg, #ff6a00, #ff3b00);
+      color: white;
+      font-weight: bold;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(255, 100, 0, 0.4);
+      transition: all 0.3s ease;
+    }
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 40px rgba(255, 120, 0, 0.7);
+    }
+
+    /* LOGOUT */
+    a.logout {
+      display: inline-block;
+      margin-top: 30px;
+      color: #ff6a00;
+      text-decoration: none;
+      border: 1px solid #ff6a00;
+      padding: 10px 25px;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      font-weight: bold;
+    }
+    a.logout:hover {
+      background: #ff6a00;
+      color: black;
+      box-shadow: 0 0 20px rgba(255, 100, 0, 0.6);
+    }
+
+    /* SUPPORT MESSAGES */
+    .chat-box {
+      margin-top: 50px;
+      width: 70%;
+      max-width: 700px;
+      text-align: left;
+    }
+    .chat-bubble {
+      margin: 15px 0;
+      padding: 15px 20px;
+      border-radius: 15px;
+      max-width: 80%;
+      box-shadow: 0 0 15px rgba(255, 100, 0, 0.3);
+    }
+    .user-msg {
+      background: linear-gradient(135deg, #222, #333);
+      border: 1px solid #ff6a00;
+      color: #fff;
+      margin-left: auto;
+      text-align: right;
+    }
+    .admin-msg {
+      background: linear-gradient(135deg, #001100, #002200);
+      border: 1px solid #00ff88;
+      color: #00ff88;
+      margin-right: auto;
+    }
+    .timestamp {
+      font-size: 0.8rem;
+      color: #999;
+      margin-top: 5px;
+      text-align: right;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Welcome, {{ member.name }} 💪</h1>
+
+  <div class="dashboard-card">
+    {% if member.profile_pic %}
+      <img src="{{ member.profile_pic.url }}" alt="Profile Picture" class="profile-pic">
+    {% else %}
+      <div class="default-pic">{{ member.name|first|upper }}</div>
+    {% endif %}
+
+    <div class="member-info">
+      <p><strong>Email:</strong> {{ member.email }}</p>
+      <p><strong>Plan:</strong> {{ member.membership }}</p>
+      <p><strong>Preferred Time:</strong> {{ member.preferred_time }}</p>
+    </div>
+
+    {% if member.payment_confirmed %}
+      <div class="status paid">✅ Payment Confirmed</div>
+      <p><strong>Start Date:</strong> {{ member.start_date }}</p>
+      {% if member.end_date %}
+        <p class="expiry">Expires on: {{ member.end_date }}</p>
+      {% endif %}
+    {% else %}
+      <div class="status pending">!! Payment Pending</div>
+      <a href="{% url 'payment' %}"><button type="button">Proceed to Payment</button></a>
+    {% endif %}
+    {% if member.payment_confirmed %}
+    {% if member.admin_approved %}
+        <p style="color:limegreen;">Admin Approved</p>
+    {% else %}
+        <p style="color:orange;"> Waiting for Admin Approval</p>
+    {% endif %}
+{% else %}
+    <p style="color:red;">Payment Pending</p>
+{% endif %}
+
+
+  </div>
+
+
+  <hr style="margin: 40px 0; border: 1px solid orange;">
+<h2 style="color: orange;"> Your Support Messages</h2>
+
+{% if messages %}
+  {% for msg in messages %}
+    <div style="border: 1px solid orange; border-radius: 10px; padding: 15px; margin: 20px auto; width: 60%; text-align: left;">
+      <p><b>Your Message:</b> {{ msg.message }}</p>
+      <p><small>Sent on: {{ msg.created_at }}</small></p>
+
+      {% if msg.admin_reply %}
+        <hr>
+        <p style="color: #00ff80;"><b>Admin Reply:</b> {{ msg.admin_reply }}</p>
+        <p><small>Replied on: {{ msg.replied_at }}</small></p>
+      {% else %}
+        <p style="color: gray;">! Awaiting admin reply...</p>
+      {% endif %}
+    </div>
+  {% endfor %}
+{% else %}
+  <p style="color: gray;">You haven’t sent any support messages yet.</p>
+{% endif %}
+
+
+
+  <a href="{% url 'logout' %}" class="logout">Logout</a>
+
+  <footer>
+    <p>© 2025 IRON OLD FITNESS | Strong Today, Stronger Tomorrow </p>
+  </footer>
+</body>
+</html>
+

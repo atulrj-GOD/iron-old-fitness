@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Trainer Dashboard</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: Arial;
+      text-align: center;
+    }
+    h1 {
+      color: orange;
+      margin-top: 40px;
+    }
+    table {
+      width: 90%;
+      margin: 40px auto;
+      border-collapse: collapse;
+      background-color: #111;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 15px;
+      border-bottom: 1px solid #333;
+    }
+    th {
+      background-color: orange;
+      color: black;
+      text-transform: uppercase;
+    }
+    tr:hover {
+      background-color: #222;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome, {{ trainer.name }} 🏋️‍♂️</h1>
+  <p>Specialization: {{ trainer.specialization }}</p>
+  <p>Experience: {{ trainer.experience }} years</p>
+
+  <h2>All Gym Members 💪</h2>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Membership</th>
+      <th>Preferred Time</th>
+      <th>Payment Confirmed</th>
+    </tr>
+    {% for member in members %}
+    <tr>
+      <td>{{ member.name }}</td>
+      <td>{{ member.email }}</td>
+      <td>{{ member.phone }}</td>
+      <td>{{ member.membership }}</td>
+      <td>{{ member.preferred_time }}</td>
+      <td>{% if member.payment_confirmed %}✅{% else %}❌{% endif %}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="6">No members found.</td></tr>
+    {% endfor %}
+  </table>
+</body>
+</html>
+

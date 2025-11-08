@@ -1,0 +1,135 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Support | IRON OLD FITNESS</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+
+    h1 {
+      color: #ff6a00;
+      text-shadow: 0 0 10px #ff6a00, 0 0 25px #ff3b00;
+      margin-bottom: 20px;
+    }
+
+    p {
+      color: #ccc;
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+    }
+
+    form {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 100, 0, 0.4);
+      width: 400px;
+      margin: 0 auto;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255, 100, 0, 0.2);
+    }
+
+    input, textarea {
+      width: 90%;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+    }
+
+    textarea {
+      height: 100px;
+      resize: none;
+    }
+
+    button {
+      background: linear-gradient(90deg, #ff6a00, #ff3b00);
+      color: white;
+      border: none;
+      padding: 10px 25px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      box-shadow: 0 0 20px rgba(255, 100, 0, 0.6);
+      transform: scale(1.05);
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 30px;
+      text-decoration: none;
+      color: #ff6a00;
+      border: 1px solid #ff6a00;
+      padding: 8px 15px;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    a:hover {
+      background: #ff6a00;
+      color: black;
+    }
+    .reply-btn {
+  display: inline-block;
+  margin-top: 10px;
+  background-color: orange;
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 8px 15px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+.reply-btn:hover {
+  background-color: darkorange;
+  color: white;
+}
+.info-line {
+      color: #ff6a00;
+      font-weight: bold;
+      font-size: 1rem;
+      margin-bottom: 30px;
+      text-shadow: 0 0 10px rgba(255, 106, 0, 0.4);
+    }
+
+
+
+
+
+
+
+  </style>
+</head>
+<body>
+  <h1>Need Help? We’re Here </h1>
+  <p>Fill out the form below and our support team will reach out shortly.</p>
+  <div class="info-line">Register and send your message — replies will appear in your dashboard.</div>
+
+  <form method="POST">
+    {% csrf_token %}
+    <input type="text" name="name" placeholder="Your Name" required><br>
+    <input type="email" name="email" placeholder="Your Email" required><br>
+    <textarea name="message" placeholder="Write your message here..." required></textarea><br>
+    <button type="submit">Send Message</button>
+  </form>
+
+  <a href="{% url 'login' %}">← Back to Home</a>
+
+
+
+<!-- <a href="mailto:{{ msg.email }}?subject=Reply%20from%20IRON%20OLD%20FITNESS&body=Hi%20{{ msg.name }},%0D%0A%0D%0AThanks%20for%20contacting%20IRON%20OLD%20FITNESS!"
+       class="reply-btn">Reply </a> -->
+
+</body>
+</html>

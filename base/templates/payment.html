@@ -1,0 +1,132 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>IRON OLD FITNESS | Payment</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #000, #111);
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      color: #ff6600;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      text-shadow: 0 0 20px rgba(255, 120, 0, 0.7);
+    }
+
+    .payment-card {
+      background: rgba(25, 25, 25, 0.95);
+      border: 1px solid rgba(255, 100, 0, 0.4);
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(255, 100, 0, 0.3);
+      padding: 40px;
+      width: 400px;
+      text-align: center;
+      transition: all 0.4s ease;
+    }
+
+    .payment-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 50px rgba(255, 120, 0, 0.6);
+    }
+
+    .plan-details {
+      margin-bottom: 25px;
+      text-align: left;
+    }
+
+    .plan-details p {
+      margin: 8px 0;
+      font-size: 1.1rem;
+    }
+
+    label {
+      display: block;
+      margin: 12px 0 6px;
+      color: #ff8c1a;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      background: #222;
+      color: white;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    button {
+      margin-top: 25px;
+      background: linear-gradient(90deg, #ff6a00, #ff3b00);
+      color: white;
+      font-weight: bold;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(255, 100, 0, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 40px rgba(255, 120, 0, 0.7);
+    }
+
+    a {
+      margin-top: 20px;
+      display: inline-block;
+      color: #ff6600;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    a:hover {
+      color: white;
+      text-shadow: 0 0 10px #ff6600;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Confirm Your Payment !</h1>
+
+  <div class="payment-card">
+    <div class="plan-details">
+      <p><strong>Name:</strong> {{ member.name }}</p>
+      <p><strong>Plan:</strong> {{ member.membership }}</p>
+      <p><strong>Price:</strong> ₹{{ plan_info.price }}</p>
+      <p><strong>Duration:</strong> {{ plan_info.duration }} Days</p>
+    </div>
+
+    <form method="POST">
+      {% csrf_token %}
+      <label for="method">Select Payment Method:</label>
+      <select id="method" name="method" required>
+        <option value="UPI"> UPI</option>
+        <option value="CARD"> Credit/Debit Card</option>
+        <option value="WALLET"> Wallet</option>
+      </select>
+
+      <button type="submit">Confirm Payment</button>
+    </form>
+
+    <a href="{% url 'dashboard' %}">← Go Back</a>
+  </div>
+</body>
+</html>
